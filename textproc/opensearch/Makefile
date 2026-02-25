@@ -1,9 +1,17 @@
 PORTNAME=	opensearch
 DISTVERSION=	3.5.0
 PORTREVISION=	1
-DISTVERSIONSUFFIX=	-linux-${OPENSEARCH_ARCH}
 CATEGORIES=	textproc java devel
 MASTER_SITES=	https://artifacts.opensearch.org/releases/bundle/${PORTNAME}/${DISTVERSION}/
+
+DISTFILES_aarch64=	${PORTNAME}-${DISTVERSION}-linux-arm64${EXTRACT_SUFX}
+DISTFILES_amd64=	${PORTNAME}-${DISTVERSION}-linux-x64${EXTRACT_SUFX}
+
+.if make(makesum)
+DISTFILES=	${DISTFILES_aarch64} ${DISTFILES_amd64}
+.else
+DISTFILES=	${DISTFILES_${ARCH}}
+.endif
 
 MAINTAINER=	opensearch@FreeBSD.org
 COMMENT=	Full-text search engine for Java
@@ -38,8 +46,6 @@ OPTIONS_DEFINE=		PLUGINS
 OPTIONS_DEFAULT=	PLUGINS
 
 .include <bsd.port.options.mk>
-
-OPENSEARCH_ARCH?=	${ARCH:S|aarch64|arm64|:S|amd64|x64|}
 
 CONFIG_FILES=	opensearch.yml jvm.options log4j2.properties
 

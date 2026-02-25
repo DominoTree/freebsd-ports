@@ -1,8 +1,16 @@
 PORTNAME=	opensearch-dashboards
 DISTVERSION=	3.5.0
-DISTVERSIONSUFFIX=	-linux-${OPENSEARCH_ARCH}
 CATEGORIES=	textproc www
 MASTER_SITES=	https://artifacts.opensearch.org/releases/bundle/${PORTNAME}/${DISTVERSION}/
+
+DISTFILES_aarch64=	${PORTNAME}-${DISTVERSION}-linux-arm64${EXTRACT_SUFX}
+DISTFILES_amd64=	${PORTNAME}-${DISTVERSION}-linux-x64${EXTRACT_SUFX}
+
+.if make(makesum)
+DISTFILES=	${DISTFILES_aarch64} ${DISTFILES_amd64}
+.else
+DISTFILES=	${DISTFILES_${ARCH}}
+.endif
 
 MAINTAINER=	opensearch@FreeBSD.org
 COMMENT=	Visualization dashboards for OpenSearch
@@ -32,8 +40,6 @@ WRKSRC=		${WRKDIR}/${PORTNAME}-${DISTVERSION}
 _DEVDIR=	${WRKDIR}/.devdir
 
 .include <bsd.port.pre.mk>
-
-OPENSEARCH_ARCH=	${ARCH:S|aarch64|arm64|:S|amd64|x64|}
 
 post-patch:
 	${RM} ${WRKSRC}/bin/*.orig ${WRKSRC}/bin/*.bak
