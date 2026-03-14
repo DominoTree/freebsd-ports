@@ -1,0 +1,14 @@
+[
+{ type: install
+  message: <<EOM
+For input simulation (KeyPress/MouseClick/MouseScroll rule actions),
+the uinput kernel module must be loaded:
+
+    kldload uinput
+
+To load at boot:
+
+    sysrc kld_list+="uinput"
+EOM
+}
+]
