@@ -1,17 +1,24 @@
 PORTNAME=	solaar
-DISTVERSION=	1.1.19
-PORTREVISION= 1	
+DISTVERSION=	1.1.20
 CATEGORIES=	sysutils
 
 MAINTAINER=	ports@FreeBSD.org
-COMMENT=	Device manager for the Logitech Unifying Receiver
+COMMENT=	Device manager for Logitech Unifying and Bolt receivers
 WWW=		https://pwr-solaar.github.io/Solaar/
 
 LICENSE=	GPLv2+
 LICENSE_FILE=	${WRKSRC}/LICENSE.txt
 
-# libhidapi.so is only loaded at runtime via ctypes (dlopen)
-RUN_DEPENDS=	${LOCALBASE}/lib/libhidapi.so:comms/hidapi
+# hidapi is dlopen'd through ctypes, so it is not a linked dependency.
+# logitech_receiver imports Gdk, so the GTK typelib is needed even for the
+# command line interface.
+RUN_DEPENDS=	${LOCALBASE}/lib/libhidapi.so:comms/hidapi \
+		${LOCALBASE}/lib/girepository-1.0/Gdk-3.0.typelib:x11-toolkits/gtk30 \
+		${PYTHON_PKGNAMEPREFIX}psutil>=5.4.3:sysutils/py-psutil@${PY_FLAVOR} \
+		${PYTHON_PKGNAMEPREFIX}pycairo>0:graphics/py-pycairo@${PY_FLAVOR} \
+		${PYTHON_PKGNAMEPREFIX}pygobject>0:devel/py-pygobject@${PY_FLAVOR} \
+		${PYTHON_PKGNAMEPREFIX}python-xlib>=0.27:x11-toolkits/py-python-xlib@${PY_FLAVOR} \
+		${PYTHON_PKGNAMEPREFIX}pyyaml>=3.12:devel/py-pyyaml@${PY_FLAVOR}
 
 USES=		python
 USE_GITHUB=	yes
@@ -21,26 +28,20 @@ USE_PYTHON=	autoplist concurrent distutils optsuffix
 
 NO_ARCH=	yes
 
-OPTIONS_DEFINE=	EVDEV GUI
-OPTIONS_DEFAULT=	EVDEV
+PLIST_FILES=	etc/devd/solaar.conf
 
-EVDEV_DESC=	Input simulation support (KeyPress/MouseClick/MouseScroll rules)
-EVDEV_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}evdev>=1.1.2:devel/py-evdev
+OPTIONS_DEFINE=		DBUS EVDEV
+OPTIONS_DEFAULT=	DBUS EVDEV
 
-GUI_USES=	gnome
-GUI_USE=	GNOME=pygobject3:run
+DBUS_DESC=		Desktop notifications and suspend/resume handling
+DBUS_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}dbus>0:devel/py-dbus@${PY_FLAVOR}
 
-post-patch:
-	@${REINPLACE_CMD} '/pyudev/d' \
-		${WRKSRC}/lib/solaar/gtk.py
-
-post-build:
-	${AWK} -f ${FILESDIR}/devd-solaar.awk \
-		${WRKSRC}/rules.d/42-logitech-unify-permissions.rules \
-		> ${WRKDIR}/solaar.conf.sample
+EVDEV_DESC=		Input simulation (KeyPress, MouseClick and MouseScroll rules)
+EVDEV_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}evdev>=1.1.2:devel/py-evdev@${PY_FLAVOR}
 
 post-install:
-	${INSTALL_DATA} ${WRKDIR}/solaar.conf.sample \
-		${STAGEDIR}${PREFIX}/etc/devd
+	@${MKDIR} ${STAGEDIR}${PREFIX}/etc/devd
+	${INSTALL_DATA} ${FILESDIR}/solaar.conf \
+		${STAGEDIR}${PREFIX}/etc/devd/solaar.conf
 
 .include <bsd.port.mk>
