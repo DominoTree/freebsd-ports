@@ -1,6 +1,6 @@
 PORTNAME=	evdev
 PORTVERSION=	1.9.1
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	devel python
 MASTER_SITES=	PYPI
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -20,7 +20,7 @@ USE_PYTHON=	autoplist distutils
 EVDEV_INCLUDES=	${LOCALBASE}/include
 
 PYDISTUTILS_BUILD_TARGET=	build_ecodes
-PYDISTUTILS_BUILDARGS+=		--evdev-headers ${EVDEV_INCLUDES}/linux/input.h:${EVDEV_INCLUDES}/linux/input-event-codes.h
+PYDISTUTILS_BUILDARGS+=		--evdev-headers ${EVDEV_INCLUDES}/linux/input.h:${EVDEV_INCLUDES}/linux/input-event-codes.h:${EVDEV_INCLUDES}/linux/uinput.h
 PYDISTUTILS_BUILDARGS+=		build_ext
 PYDISTUTILS_BUILDARGS+=		--include-dirs ${EVDEV_INCLUDES}
 
