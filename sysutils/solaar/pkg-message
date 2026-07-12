@@ -1,14 +1,20 @@
 [
 { type: install
   message: <<EOM
-For input simulation (KeyPress/MouseClick/MouseScroll rule actions),
-the uinput kernel module must be loaded:
+Solaar reaches Logitech receivers through libusb, so users who are to
+configure their devices need access to the USB device nodes.  A devd(8)
+rule in %%PREFIX%%/etc/devd/solaar.conf grants that to the "operator"
+group, for Logitech hardware only.  Add yourself to that group and log in
+again:
 
-    kldload uinput
+	pw groupmod operator -m yourusername
+	service devd restart
 
-To load at boot:
+Rules that simulate input (KeyPress, MouseClick and MouseScroll actions)
+additionally need the uinput(4) module:
 
-    sysrc kld_list+="uinput"
+	kldload uinput
+	sysrc kld_list+="uinput"
 EOM
 }
 ]
