@@ -1,12 +1,14 @@
 PORTNAME=	gtk
 PORTVERSION=	4.20.4
+PORTREVISION=	1
 CATEGORIES=	x11-toolkits
 MASTER_SITES=	GNOME
 PKGNAMESUFFIX=	4
 DIST_SUBDIR=	gnome
 
 PATCH_SITES=	https://gitlab.gnome.org/GNOME/gtk/-/commit/
-PATCHFILES=	047c8e64d4156897776ec2bc3d0613a81cfe7ad1.patch:-p1
+PATCHFILES=	047c8e64d4156897776ec2bc3d0613a81cfe7ad1.patch:-p1 \
+		a8a5692ce3c334672ac325cf8f1257a138843bf6.patch:-p1
 
 MAINTAINER=	desktop@FreeBSD.org
 COMMENT=	Gimp Toolkit for X11 GUI (current stable version)
