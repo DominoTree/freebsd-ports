@@ -1,0 +1,11 @@
+--- support/xhpast/Makefile.orig	2026-10-06 11:41:58 UTC
++++ support/xhpast/Makefile
+@@ -66,7 +66,7 @@ node_names.hpp parser_nodes.php: bin/xhpast-generate-n
+ 	$(CXX) -c $(CPPFLAGS) -o $@ $<
+ 
+ node_names.hpp parser_nodes.php: bin/xhpast-generate-nodes.php
+-	php -f $<
++	./$<
+ 
+ parser.yacc.o: scanner.lex.hpp
+ scanner.lex.o: parser.yacc.hpp node_names.hpp scanner.lex.hpp

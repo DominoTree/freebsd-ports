@@ -1,4 +1,4 @@
---- src/utils/PhutilExecutionEnvironment.php.orig	2020-05-19 10:38:43 UTC
+--- src/utils/PhutilExecutionEnvironment.php.orig	2026-10-06 11:41:58 UTC
 +++ src/utils/PhutilExecutionEnvironment.php
 @@ -36,7 +36,7 @@ final class PhutilExecutionEnvironment extends Phobjec
      }

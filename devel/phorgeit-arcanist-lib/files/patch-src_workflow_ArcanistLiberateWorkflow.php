@@ -1,6 +1,6 @@
---- src/workflow/ArcanistLiberateWorkflow.php.orig	2021-12-10 00:42:19 UTC
+--- src/workflow/ArcanistLiberateWorkflow.php.orig	2026-10-06 11:41:58 UTC
 +++ src/workflow/ArcanistLiberateWorkflow.php
-@@ -163,7 +163,7 @@ EOTEXT
+@@ -174,7 +174,7 @@ EOTEXT
      }
  
      return phutil_passthru(

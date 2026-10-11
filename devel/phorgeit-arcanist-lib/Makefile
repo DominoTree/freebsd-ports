@@ -1,5 +1,5 @@
 PORTNAME?=	arcanist
-PORTVERSION?=	2026.27
+PORTVERSION?=	2026.27.20261006
 PORTEPOCH?=	1
 CATEGORIES?=	devel
 PKGNAMEPREFIX=	phorgeit-
@@ -15,13 +15,14 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 USES=		php:cli,flavors python:env shebangfix
 USE_GITHUB=	yes
 GH_ACCOUNT=	phorgeit
-USE_PHP=	curl dom simplexml zlib
-IGNORE_WITH_PHP=	85 86
+GH_TAGNAME=	cd394bcded904eb4c69e11be4dba47707ee1a03f
+USE_PHP=	ctype curl dom phar simplexml tokenizer zlib
+IGNORE_WITH_PHP=	86
 
 PHP_DESTDIR=	lib/php/arcanist
 SHEBANG_FILES=	bin/arc bin/phage scripts/*.php scripts/hgdaemon/*.php \
 		src/parser/*.php support/arcanoid/arcanoid.py support/lib/*.php \
-		support/unit/*.php support/xhpast/*.php \
+		support/php-parser/*.php support/unit/*.php support/xhpast/*.php \
 		support/xhpast/bin/*.php
 
 NO_ARCH=	yes
@@ -58,7 +59,8 @@ do-install:
 	@${REINPLACE_CMD} \
 		's|%%PREFIX%%|${PREFIX}|g; \
 		 s|%%PHP_DESTDIR%%|${PHP_DESTDIR}|g' \
-		${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/support/shell/hooks/bash-completion.sh
+		${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/support/shell/hooks/bash-completion.sh \
+		${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/support/shell/templates/bash-template.sh
 	@${REINPLACE_CMD} \
 		's|%%PKGNAME%%|${PKGNAMEPREFIX}${PORTNAME}${PKGNAMESUFFIX}|g; \
 		 s|%%PKGVERSION%%|${PKGVERSION}|g; \
@@ -79,7 +81,7 @@ do-install:
 		 ${STAGEDIR}${PREFIX}/share/bash-completion/completions/arc
 	${RM} ${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/resources/ssl/default.pem
 	@${FIND} ${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/ -name '*.bak' -delete -o -name '*.orig' -delete
-	${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/bin/arc shell-complete --generate
+	${STAGEDIR}${PREFIX}/${PHP_DESTDIR}/bin/arc shell-complete --generate --
 .endif
 
 .include <bsd.port.mk>

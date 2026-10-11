@@ -1,7 +1,7 @@
---- src/moduleutils/PhutilLibraryMapBuilder.php.orig	2022-03-04 17:30:36 UTC
+--- src/moduleutils/PhutilLibraryMapBuilder.php.orig	2026-10-06 11:41:58 UTC
 +++ src/moduleutils/PhutilLibraryMapBuilder.php
-@@ -240,7 +240,7 @@ final class PhutilLibraryMapBuilder extends Phobject {
-     $bin = dirname(__FILE__).'/../../support/lib/extract-symbols.php';
+@@ -269,7 +269,7 @@ final class PhutilLibraryMapBuilder extends Phobject {
+     }
  
      return new ExecFuture(
 -      'php -f %R -- --ugly %Ls -- %Ls',

@@ -1,6 +1,6 @@
---- src/runtime/ArcanistRuntime.php.orig	2021-12-10 00:42:19 UTC
+--- src/runtime/ArcanistRuntime.php.orig	2026-10-06 11:41:58 UTC
 +++ src/runtime/ArcanistRuntime.php
-@@ -208,7 +208,7 @@ final class ArcanistRuntime {
+@@ -231,7 +231,7 @@ final class ArcanistRuntime {
      $bin = $arcanist_root.'/scripts/arcanist.php';
  
      $err = phutil_passthru(
