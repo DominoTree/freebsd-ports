@@ -1885,7 +1885,9 @@ lib/php/arcanist/src/unit/parser/__tests__/testresults/xunit.invalid-xml
 lib/php/arcanist/src/unit/parser/__tests__/testresults/xunit.no-tests
 lib/php/arcanist/src/unit/parser/__tests__/testresults/xunit.simple
 lib/php/arcanist/src/unit/renderer/ArcanistUnitConsoleRenderer.php
+lib/php/arcanist/src/unit/renderer/ArcanistUnitConsoleReporter.php
 lib/php/arcanist/src/unit/renderer/ArcanistUnitRenderer.php
+lib/php/arcanist/src/unit/renderer/ArcanistUnitReporter.php
 lib/php/arcanist/src/upload/ArcanistFileDataRef.php
 lib/php/arcanist/src/upload/ArcanistFileUploader.php
 lib/php/arcanist/src/utils/AbstractDirectedGraph.php

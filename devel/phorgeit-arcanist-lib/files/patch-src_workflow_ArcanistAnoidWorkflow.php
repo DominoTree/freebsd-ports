@@ -1,6 +1,6 @@
---- src/workflow/ArcanistAnoidWorkflow.php.orig	2025-12-15 18:12:56 UTC
+--- src/workflow/ArcanistAnoidWorkflow.php.orig	2026-10-06 11:41:58 UTC
 +++ src/workflow/ArcanistAnoidWorkflow.php
-@@ -24,10 +24,10 @@ EOTEXT
+@@ -24,11 +24,12 @@ EOTEXT
    }
  
    protected function runWorkflow() {
@@ -9,7 +9,10 @@
        throw new PhutilArgumentUsageException(
          pht(
 -          'The "arc anoid" workflow requires "python3" to be available '.
-+          'The "arc anoid" workflow requires "%%PYTHON_CMD%%" to be available '.
-           'in your $PATH.'));
+-          'in your $PATH.'));
++          'The "arc anoid" workflow requires "%s" to be available '.
++          'in your $PATH.',
++          '%%PYTHON_CMD%%'));
      }
  
+     $support_dir = phutil_get_library_root('arcanist');

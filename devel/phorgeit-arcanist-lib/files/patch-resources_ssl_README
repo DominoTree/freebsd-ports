@@ -1,0 +1,27 @@
+--- resources/ssl/README.orig	2026-10-06 11:41:58 UTC
++++ resources/ssl/README
+@@ -18,17 +18,18 @@ All Other Systems
+ All Other Systems
+ =================
+ 
+-If "curl.cainfo" is not set, Arcanist uses the "default.pem" certificate
+-authority bundle when making HTTPS requests with cURL. This bundle is extracted
+-from Mozilla's certificates by cURL:
++Arcanist uses cURL's configured certificate authority defaults, including
++PHP's "curl.cainfo" setting and the system trust store. The FreeBSD package
++does not ship a "default.pem" bundle.
+ 
+-  http://curl.haxx.se/docs/caextract.html
+-
+ If you want to use a different CA bundle (for example, because you use
+ self-signed certificates), set "curl.cainfo", or create a file (or symlink) in
+ this directory named "custom.pem".
+ 
+-If "custom.pem" is present, that file will be used instead of "default.pem".
++If "custom.pem" is a file, it replaces the default CA bundle. If it is a
++directory (or a symlink to one) of hashed CA certificates, cURL searches it
++in addition to the default CA bundle. An explicitly configured per-request
++or global CA bundle takes precedence over "custom.pem".
+ 
+ If you receive errors using your "custom.pem" file, you can test it directly
+ with `curl` by running a command like this:

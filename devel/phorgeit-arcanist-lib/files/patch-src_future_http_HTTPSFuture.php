@@ -1,6 +1,15 @@
---- src/future/http/HTTPSFuture.php.orig	2025-12-15 18:12:56 UTC
+--- src/future/http/HTTPSFuture.php.orig	2026-10-06 11:41:58 UTC
 +++ src/future/http/HTTPSFuture.php
-@@ -379,31 +379,24 @@ final class HTTPSFuture extends BaseHTTPFuture {
+@@ -243,6 +243,8 @@ final class HTTPSFuture extends BaseHTTPFuture {
+ 
+       if (!empty(self::$pool[$domain])) {
+         $curl = array_pop(self::$pool[$domain]);
++        // Do not retain per-request CA settings.
++        curl_reset($curl);
+       } else {
+         $curl = curl_init();
+         if (!$curl) {
+@@ -379,31 +381,26 @@ final class HTTPSFuture extends BaseHTTPFuture {
        //   means that the user wants to override everything (also because the
        //   user might not have access to change the box's php.ini to add
        //   curl.cainfo).
@@ -9,11 +18,12 @@
 -      //   Arcanist ships with.
 -      // - Lastly, try the default that Arcanist ships with. If it doesn't
 -      //   work, give up and yell at the user.
++      // - Otherwise, leave cURL's configured CA defaults in effect.
  
        if (!$this->getCABundle()) {
          $caroot = dirname(phutil_get_library_root('arcanist'));
          $caroot = $caroot.'/resources/ssl/';
--
+ 
 -        $ini_val = ini_get('curl.cainfo');
          if (self::getGlobalCABundle()) {
            $this->setCABundleFromPath(self::getGlobalCABundle());
@@ -38,4 +48,4 @@
 +        }
        }
  
-       $verify_peer = 1;
+       $verify_peer = true;
